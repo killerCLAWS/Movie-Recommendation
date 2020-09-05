@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+        <title>MovieForYOU | Home</title>
+    </head>
+    <body>
+        <div>
+            
+        <div class="form1" style="align-self: left;">
+            <form action="/" method="POST">
+                <input type="text" placeholder="(Enter Movie ID).." name="content" id="content">
+                <input type="submit" value="GetMovie Details">
+            </form>
+        </div>
+        <div style="width: 100%; background-color: brown;  text-align: center;">
+                <p>Movie ID : <b>{{ tasks.rows[0]}}</b> <br> <h3>Movie :</h3>
+                    <h2 style="font-family: cursive;">{{ tasks.rows[1] }}</h2>  
+                <br><i>Genre    :</i>   <h4>{{ tasks.rows[2] }} </h4></p>
+             
+         </div>   
+    <h1 style="text-align: left;">Movie You May Like....</h1>
+    <table style="text-align: center;">
+        <tr>
+            <th>MovieID</th>
+            <th>Movie Name</th>
+            <th>Accuracy</th>
+            <th>Genre</th>
+            <th>Ratings</th>
+            <th>No of Ratings</th>
+            <th>Watch</th>
+        </tr>
+        {% for i in tasks.recommend.index: %}
+            <tr>
+                <td>{{ tasks.recommend['item_id'][i] }}</td>
+                <td>{{ i }}</td>
+                <td>{{ "{:.3f}".format(tasks.recommend['Correlation'][i]*100) }}</td>
+                <td>{{ tasks.recommend['genre'][i] }}</td>
+                <td>{{ tasks.recommend['rating'][i] }}</td>
+                <td>{{ tasks.recommend['number_of_ratings'][i] }} </td>
+                <td> <a href="/click/{{ tasks.recommend['item_id'][i] }}">Click</td>
+            </tr>
+        {% endfor %}  
+    </table>
+    </div>
+    </body>
+</html>

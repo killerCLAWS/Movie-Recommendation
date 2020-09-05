@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+        <title>MovieForYOU | Home</title>
+        
+        <script>            
+            function validateNum(){
+                var x,text;
+                x = document.getElementById('_mid').value;
+                if( x>=1 &&x<=100000000){
+                    text = "Processing Your Input.....Please wait!!";
+                    document.getElementById("error").innerHTML = text; 
+                    document.getElementById("error").style.color = "green";
+                    return true;
+                }
+                else{
+                    text= "NOT A VALID INPUT....Please enter a movie ID" ;
+                    document.getElementById("error").innerHTML = text;
+                    document.getElementById("error").style.color = "red";     
+                    return false;
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <div class="header">    
+            <div>
+                <div style="align-content: left; ">
+                    <h1 style="text-align: center;">MOVIE_&_LIST</h1>
+                </div>
+                <form action="/" method="POST" class="form1" onsubmit="return validateNum()">  
+                    <input type="text" id="_mid" placeholder="(Enter Movie ID).." name="content" id="content" required >
+                    <input type="submit" value="GetMovie Details" >
+                    <p id="error"> </p>
+                </form>
+            </div>
+        </div>
+    <div >
+    <table style="text-align: center; border: 1px ; border-collapse: separate; border-spacing: 2px;  ">
+        <tr>
+            <th>MovieID</th>
+            <th style="width: 40%;">Movie Name</th>
+            <th>Genre</th>
+            <th>Ratings</th>
+        </tr>
+        {% for i in tasks.all_movie.index: %}
+            {% if i%2==0 %}
+            <tr style="background-color: rgb(219, 214, 214); border-bottom-color: black;">
+            {% else %}
+            <tr style="background-color:white;">
+            {% endif %}        
+                <td>{{ tasks.all_movie['item_id'][i] }}</td>
+                <td>{{ tasks.all_movie['title'][i] }}</td>
+                <td>{{ tasks.all_movie['genres'][i] }} <br>
+                    <a href="/click/{{ tasks.all_movie['item_id'][i] }}">Click</a>   
+                </td>
+                <td>{{ 5 }}</td>
+            </tr>
+        {% endfor %}
+    </table>    
+    </div>
+    </body>
+</html>
